@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>registration successful</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif; 
+            margin: 0;
+            padding: 0;
+        }
+        
+        .success-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f5f0ed;
+        }
+        
+        .success-box {
+            text-align: center;
+            padding: 40px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            min-width: 400px;
+        }
+        
+        .success-title {
+            color: #7b3b36;
+            font-size: 28px;
+            font-weight: 500;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+        
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 25px;
+            background-color: transparent;
+            color: #7b3b36;
+            text-decoration: none;
+            border: 2px solid #7b3b36;
+            border-radius: 4px;
+            font-size: 16px;
+            transition: all 0.2s ease;
+        }
+        
+        .back-button:hover {
+            background-color: #7b3b36;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-container">
+        <div class="success-box">
+            <div class="success-title">Registration Successful!</div>
+            <a href="{% url 'main' %}" class="back-button">back to main page</a>
+        </div>
+    </div>
+</body>
+</html>

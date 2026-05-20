@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> page 2 </title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body data-page-name="page2">
+    <div class="my-fixed-menu">
+        <div class="my-menu-header">
+            <p style="text-align: center; margin-top: 15px;"><span class="i-present"><a href="{% url 'main' %}">back to main page</a></span></p>
+        </div>
+        
+        <div class="menu-links">
+            <a href="{% url 'page1' %}">page 1</a>
+            <a href="{% url 'page2' %}">page 2</a>
+            <a href="{% url 'page3' %}">page 3</a>
+            <a href="{% url 'login' %}">login</a>
+        </div>
+    </div>
+
+    <div class="album-page-container">
+        
+        <div class="album-main-block">
+            <img src="https://images.genius.com/cebc831c721e4f81a6bb0664e7fba294.1000x1000x1.jpg" 
+                alt="The Night in Question: French Exit Outtakes album cover" 
+                class="album-cover">
+            
+            <div class="album-info">
+                <h1 class="album-title">The Night in Question: French Exit Outtakes</h1>
+                <h2 class="album-artist">TV Girl</h2>
+                <div class="album-description">
+                    <p>The Night in Question: French Exit Outtakes is an EP (extended play) self-released by TV Girl May 1, 2020.</p>
+                    <p>It collects eight songs which were recorded during the French Exit era, but did not make the final cut for the album.</p>
+
+                    <p><a href="#listen" style="color: #7b3b36; text-decoration: none;">↓ Listen on Spotify</a></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tracklist-section">
+            <h3 class="tracklist-title">Tracklist:</h3>
+            <ol class="tracklist">
+                <li>The Night in Question</li>
+                <li>Valerie</li>
+                <li>Lines to a Different Play</li>
+                <li>It Almost Worked</li>
+                <li>The Desolation Tango </li>
+                <li>Sleeping with the Enemy</li>
+                <li>Your Friends Are Calling Your Name</li>
+                <li>Stay Away (It's Like That)</li>
+            </ol>
+        </div>
+        
+        <div class="spotify-link" id="listen">
+            <a href="https://open.spotify.com/album/4p3eRdoK7W7z0tz8OWA3JM?si=fs8G0vGZQvOIwIpFPYFU9A" target="_blank">
+                Listen on Spotify <3
+            </a>
+        </div>
+    </div>
+
+    <div class="ratings-container">
+        <h3 style="color: #7b3b36;">Rate this page</h3>
+        
+        <div class="rating-buttons">
+            <button id="like-btn" class="rating-btn">👍 Like</button>
+            <button id="dislike-btn" class="rating-btn">👎 Dislike</button>
+            <button id="reset-btn" class="rating-btn" style="border-color: red; color: red;">Reset</button>
+        </div>
+        
+        <div class="rating-stats">
+            <span>👍 <span id="likes-count">0</span></span>
+            <span>👎 <span id="dislikes-count">0</span></span>
+        </div>
+    </div>
+
+    {% csrf_token %}
+    
+    <script src="{% static 'js/ratings.js' %}"></script>
+</body>
+</html>

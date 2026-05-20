@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js validation</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+    <style>
+        .error-input {
+            border: 2px solid #e74c3c !important;
+            background-color: #fff5f5 !important;
+        }
+        
+        .valid-input {
+            border: 2px solid #2ecc71 !important;
+            background-color: #f0fff4 !important;
+        }
+        
+        .error-hint {
+            color: #e74c3c !important;
+            font-weight: bold !important;
+        }
+        
+        .success-hint {
+            color: #2ecc71 !important;
+        }
+        
+        #validationResult {
+            margin: 20px 0;
+            padding: 10px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        #validationResult.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        
+        #validationResult.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="my-fixed-menu">
+        <div class="my-menu-header">
+            <p style="text-align: center; margin-top: 15px;">
+                <span class="i-present"><a href="{% url 'main' %}">back to main page</a></span>
+            </p>
+        </div>
+        <div class="menu-links">
+            <a href="{% url 'page1' %}">page 1</a>
+            <a href="{% url 'page2' %}">page 2</a>
+            <a href="{% url 'page3' %}">page 3</a>
+            <a href="{% url 'login' %}">login</a>
+        </div>
+    </div>
+
+    <div class="page-nav">
+        <a href="#basic">basic info</a>
+        <a href="#email">email</a>
+        <a href="#optional">optional info</a>
+    </div>
+
+    <div class="form-container">
+        <h1 class="form-title">javascript validation</h1>
+        <br>
+
+        <form id="validationForm" method="POST">
+            {% csrf_token %}
+
+            <div id="basic" class="section">
+                <h3 style="color: #7b3b36; margin-bottom: 15px;">basic info</h3>
+                
+                <div class="form-group">
+                    <label>first name</label>
+                    <input type="text" id="firstName" name="first_name" placeholder="Firstname">
+                    <span class="hint" id="firstNameHint">латиница, с заглавной</span>
+                </div>
+
+                <div class="form-group">
+                    <label>last name</label>
+                    <input type="text" id="lastName" name="last_name" placeholder="Lastname">
+                    <span class="hint" id="lastNameHint">латиница, с заглавной</span>
+                </div>
+
+                <div class="form-group">
+                    <label>age</label>
+                    <input type="number" id="age" name="age" placeholder="18-100">
+                    <span class="hint" id="ageHint">от 18 до 100</span>
+                </div>
+            </div>
+
+            <div id="email-section" class="section" style="margin-top: 40px;">
+                <h3 style="color: #7b3b36; margin-bottom: 15px;">email</h3>
+                
+                <div class="form-group">
+                    <label>email address</label>
+                    <input type="email" id="email" name="email" placeholder="name@example.com">
+                    <span class="hint" id="emailHint">формат: name@domain.com</span>
+                </div>
+            </div>
+
+            <!-- блок с паролями -->
+            <div id="password-section" class="section" style="margin-top: 40px;">
+                <h3 style="color: #7b3b36; margin-bottom: 15px;">password</h3>
+                
+                <div class="form-group">
+                    <label>password</label>
+                    <input type="password" id="password" name="password" placeholder="minimum 8 characters">
+                    <span class="hint" id="passwordHint">минимум 8 символов</span>
+                </div>
+
+                <div class="form-group">
+                    <label>confirm password</label>
+                    <input type="password" id="passwordConfirm" name="password_confirm" placeholder="repeat password">
+                    <span class="hint" id="passwordConfirmHint">пароли должны совпадать</span>
+                </div>
+            </div>
+
+            <div id="optional" class="section" style="margin-top: 40px;">
+                <h3 style="color: #7b3b36; margin-bottom: 15px;">optional info</h3>
+                
+                <div class="form-group">
+                    <label>favorite album</label>
+                    <input type="text" id="album" name="favorite_album" placeholder="heaven or las vegas">
+                    <span class="hint">можно не заполнять</span>
+                </div>
+            </div>
+
+            <div id="validationResult" style="display: none;"></div>
+
+            <div style="text-align: center; margin: 20px 0;">
+                <a href="#" style="color: #b07873;">back to top</a>
+            </div>
+
+            <button type="submit" class="submit-btn">submit</button>
+        </form>
+
+        <div class="back-link">
+            <a href="{% url 'login' %}" style="color: #b07873;">back to validation methods</a>
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            const validators = {
+                firstName: {
+                    regex: /^[A-Z][a-z]+$/,
+                    message: 'латиница, с заглавной'
+                },
+                lastName: {
+                    regex: /^[A-Z][a-z]+$/,
+                    message: 'латиница, с заглавной'
+                },
+                age: {
+                    validate: function(value) {
+                        const age = parseInt(value);
+                        return !isNaN(age) && age >= 18 && age <= 100;
+                    },
+                    message: 'от 18 до 100'
+                },
+                email: {
+                    regex: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: 'формат: name@domain.com'
+                },
+                password: {
+                    validate: function(value) {
+                        return value.length >= 8;
+                    },
+                    message: 'минимум 8 символов'
+                },
+                passwordConfirm: {
+                    validate: function(value) {
+                        const password = document.getElementById('password').value;
+                        return value === password && value !== '';
+                    },
+                    message: 'пароли должны совпадать'
+                }
+            };
+
+            function validateField(fieldId) {
+                const input = document.getElementById(fieldId);
+                const hint = document.getElementById(fieldId + 'Hint');
+                const validator = validators[fieldId];
+                
+                if (!input || !validator) return true;
+                
+                let isValid = true;
+                
+                if (validator.regex) {
+                    isValid = validator.regex.test(input.value);
+                } else if (validator.validate) {
+                    isValid = validator.validate(input.value);
+                }
+                
+                if (!isValid && input.value !== '') {
+                    input.classList.add('error-input');
+                    input.classList.remove('valid-input');
+                    hint.classList.add('error-hint');
+                    hint.classList.remove('success-hint');
+                } else if (isValid && input.value !== '') {
+                    input.classList.add('valid-input');
+                    input.classList.remove('error-input');
+                    hint.classList.add('success-hint');
+                    hint.classList.remove('error-hint');
+                } else {
+                    input.classList.remove('error-input', 'valid-input');
+                    hint.classList.remove('error-hint', 'success-hint');
+                }
+                
+                return isValid;
+            }
+
+            function validateForm() {
+                let isValid = true;
+                
+                for (const fieldId in validators) {
+                    if (!validateField(fieldId)) {
+                        isValid = false;
+                    }
+                }
+                
+                return isValid;
+            }
+
+            for (const fieldId in validators) {
+                const input = document.getElementById(fieldId);
+                if (input) {
+                    input.addEventListener('input', function() {
+                        validateField(fieldId);
+                    });
+                    input.addEventListener('blur', function() {
+                        validateField(fieldId);
+                    });
+                }
+            }
+
+            const form = document.getElementById('validationForm');
+            const resultDiv = document.getElementById('validationResult');
+            
+            form.addEventListener('submit', async function(event) {
+                event.preventDefault();
+                
+                if (!validateForm()) {
+                    resultDiv.style.display = 'block';
+                    resultDiv.className = 'error';
+                    resultDiv.innerHTML = 'Please fix the errors above before submitting.';
+                    setTimeout(() => {
+                        resultDiv.style.display = 'none';
+                    }, 3000);
+                    return;
+                }
+                
+                const formData = new FormData();
+                formData.append('first_name', document.getElementById('firstName').value);
+                formData.append('last_name', document.getElementById('lastName').value);
+                formData.append('age', document.getElementById('age').value);
+                formData.append('email', document.getElementById('email').value);
+                formData.append('favorite_album', document.getElementById('album').value);
+                formData.append('password', document.getElementById('password').value);
+                formData.append('password_confirm', document.getElementById('passwordConfirm').value);
+                formData.append('csrfmiddlewaretoken', document.querySelector('[name=csrfmiddlewaretoken]').value);
+                
+                try {
+                    const response = await fetch('/login/js/', {
+                        method: 'POST',
+                        body: formData
+                    });
+                    
+                    const data = await response.json();
+                    
+                    resultDiv.style.display = 'block';
+                    
+                    if (data.success) {
+                        resultDiv.className = 'success';
+                        resultDiv.innerHTML = data.message + ' Redirecting...';
+                        setTimeout(() => {
+                            window.location.href = '/registration-success/';
+                        }, 1500);
+                    } else {
+                        resultDiv.className = 'error';
+                        let errorHtml = 'Registration failed:<br>';
+                        for (const [field, errors] of Object.entries(data.errors)) {
+                            errorHtml += `• ${field}: ${errors.join(', ')}<br>`;
+                            const fieldMap = {
+                                'first_name': 'firstName',
+                                'last_name': 'lastName',
+                                'age': 'age',
+                                'email': 'email',
+                                'password': 'password',
+                                'password_confirm': 'passwordConfirm'
+                            };
+                            const inputId = fieldMap[field];
+                            if (inputId) {
+                                const input = document.getElementById(inputId);
+                                if (input) {
+                                    input.classList.add('error-input');
+                                }
+                            }
+                        }
+                        resultDiv.innerHTML = errorHtml;
+                    }
+                } catch (error) {
+                    resultDiv.style.display = 'block';
+                    resultDiv.className = 'error';
+                    resultDiv.innerHTML = 'Server error. Please try again.';
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

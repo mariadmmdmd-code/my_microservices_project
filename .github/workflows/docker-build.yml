@@ -1,0 +1,36 @@
+name: Build Docker Images
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+    
+    - name: Build frontend
+      run: docker build -t my-frontend ./frontend
+    
+    - name: Build ratings_api
+      run: docker build -t my-ratings-api ./ratings_api
+    
+    - name: Build users_api
+      run: docker build -t my-users-api ./users_api
+    
+    - name: Start containers
+      run: docker-compose up -d --build
+    
+    - name: Wait for services
+      run: sleep 10
+    
+    - name: Test ratings API
+      run: curl -f http://localhost:8002/health
+    
+    - name: Stop containers
+      run: docker-compose down

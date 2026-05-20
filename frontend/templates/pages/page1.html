@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> page 1 </title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body data-page-name="page1">>
+    <div class="my-fixed-menu">
+        <div class="my-menu-header">
+            <p style="text-align: center; margin-top: 15px;"><span class="i-present"><a href="{% url 'main' %}">back to main page</a></span></p>
+        </div>
+        
+        <div class="menu-links">
+            <a href="{% url 'page1' %}">page 1</a>
+            <a href="{% url 'page2' %}">page 2</a>
+            <a href="{% url 'page3' %}">page 3</a>
+            <a href="{% url 'login' %}">login</a>
+        </div>
+    </div>
+
+    <div class="album-page-container">
+        
+        <div class="album-main-block">
+            <img src="https://images.genius.com/e0ca36fdae09db5522836e89eec4d71b.1000x1000x1.png" 
+                alt="Heaven or Las Vegas album cover" 
+                class="album-cover">
+            
+            <div class="album-info">
+                <h1 class="album-title">Heaven or Las Vegas</h1>
+                <h2 class="album-artist">Cocteau Twins</h2>
+                <div class="album-description">
+                    <p>Heaven or Las Vegas is the sixth studio album by the Scottish band Cocteau Twins, released on 17 September 1990 by label 4AD.</p>
+                    <p>The album blends dream pop and ambient pop with elements of psychedelia, experimental, and electronic textures.</p>
+                    <p>Heaven or Las Vegas has since been recognised as one of Cocteau Twins' most influential works and as a landmark in dream pop.</p>
+
+                    <p><a href="#listen" style="color: #7b3b36; text-decoration: none;">↓ Listen on Spotify</a></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tracklist-section">
+            <h3 class="tracklist-title">Tracklist:</h3>
+            <ol class="tracklist">
+                <li>Cherry-coloured Funk</li>
+                <li>Pitch the Baby</li>
+                <li>Iceblink Luck</li>
+                <li>Fifty-fifty Clown</li>
+                <li>Heaven or Las Vegas</li>
+                <li>I Wear Your Ring</li>
+                <li>Fotzepolitic</li>
+                <li>Wolf in the Breast</li>
+                <li>Road, River and Rail</li>
+                <li>Frou-frou Foxes in Midsummer Fires</li>
+            </ol>
+        </div>
+        
+        <div class="spotify-link" id="listen">
+            <a href="https://open.spotify.com/album/5lEphbceIgaK1XxWeSrC9E?si=DkUKF3r0SXmVgYh7yEr3iA" target="_blank">
+                Listen on Spotify <3
+            </a>
+        </div>
+    </div>
+
+    <div class="ratings-container">
+        <h3 style="color: #7b3b36;">Rate this page</h3>
+        
+        <div class="rating-buttons">
+            <button id="like-btn" class="rating-btn">👍 Like</button>
+            <button id="dislike-btn" class="rating-btn">👎 Dislike</button>
+            <button id="reset-btn" class="rating-btn" style="border-color: red; color: red;">Reset</button>
+        </div>
+        
+        <div class="rating-stats">
+            <span>👍 <span id="likes-count">0</span></span>
+            <span>👎 <span id="dislikes-count">0</span></span>
+        </div>
+    </div>
+
+    {% csrf_token %}
+    
+    <script src="{% static 'js/ratings.js' %}"></script>
+</body>
+</html>

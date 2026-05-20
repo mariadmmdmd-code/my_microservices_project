@@ -1,0 +1,46 @@
+services:
+  frontend:
+    build: ./frontend
+    ports:
+      - "8000:8000"
+    environment:
+      - RATINGS_API_URL=http://ratings_api:8002
+      - USERS_API_URL=http://users_api:8001
+    depends_on:
+      - ratings_api
+      - users_api
+    volumes:
+      - ./frontend:/app
+    networks:
+      - microservices-network
+
+  ratings_api:
+    build: ./ratings_api
+    ports:
+      - "8002:8002"
+    networks:
+      - microservices-network
+
+  users_api:
+    build: ./users_api
+    ports:
+      - "8001:8001"
+    networks:
+      - microservices-network
+
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    depends_on:
+      - frontend
+      - ratings_api
+      - users_api
+    networks:
+      - microservices-network
+
+networks:
+  microservices-network:
+    driver: bridge

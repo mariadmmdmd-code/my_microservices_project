@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title> css validation </title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/login.css' %}">
+</head>
+<body>
+    <div class="my-fixed-menu">
+        <div class="my-menu-header">
+            <p style="text-align: center; margin-top: 15px;">
+                <span class="i-present"><a href="{% url 'main' %}">back to main page</a></span>
+            </p>
+        </div>
+        <div class="menu-links">
+            <a href="{% url 'page1' %}">page 1</a>
+            <a href="{% url 'page2' %}">page 2</a>
+            <a href="{% url 'page3' %}">page 3</a>
+            <a href="{% url 'login' %}">login</a>
+        </div>
+    </div>
+
+    <div class="page-nav">
+        <a href="#basic">basic info</a>
+        <a href="#email">email</a>
+        <a href="#optional">optional info</a>
+    </div>
+
+    <div class="form-container">
+        <h1 class="form-title">css validation</h1>
+        <br>
+
+        <!-- вывод сообщений об успехах/ошибках -->
+        {% if messages %}
+            {% for message in messages %}
+                <div style="color: green; text-align: center; padding: 10px; margin: 10px 0; background: #d4edda; border-radius: 5px;">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        {% if form.errors %}
+            <div style="color: red; text-align: center; padding: 10px; margin: 10px 0; background: #f8d7da; border-radius: 5px;">
+                {% for field, errors in form.errors.items %}
+                    {% for error in errors %}
+                        <p>{{ error }}</p>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <div id="basic" class="section">
+                <h3 style="color: #7b3b36; margin-bottom: 15px;">1. basic info</h3>
+                
+                <div class="form-group">
+                    <label>first name</label>
+                    <input type="text" name="first_name" pattern="[A-Z][a-z]+" placeholder="Firstname" required value="{{ form.first_name.value|default:'' }}">
+                    <span class="hint">латиница, с заглавной</span>
+                </div>
+
+                <div class="form-group">
+                    <label>last name</label>
+                    <input type="text" name="last_name" pattern="[A-Z][a-z]+" placeholder="Lastname" required value="{{ form.last_name.value|default:'' }}">
+                    <span class="hint">латиница, с заглавной</span>
+                </div>
+
+                <div class="form-group">
+                    <label>age</label>
+                    <input type="number" name="age" min="18" max="100" placeholder="18-100" required value="{{ form.age.value|default:'' }}">
+                    <span class="hint">от 18 до 100</span>
+                </div>
+            </div>
+
+            <div id="email" class="section" style="margin-top: 40px;">
+                <h3 style="color: #7b3b36; margin-bottom: 15px;">2. email</h3>
+                
+                <div class="form-group">
+                    <label>email address</label>
+                    <input type="email" name="email" placeholder="name@example.com" required value="{{ form.email.value|default:'' }}">
+                    <span class="hint">формат: name@domain.com</span>
+                </div>
+            </div>
+
+            <!-- пароли -->
+            <div id="password-section" class="section" style="margin-top: 40px;">
+                <h3 style="color: #7b3b36; margin-bottom: 15px;">3. password</h3>
+                
+                <div class="form-group">
+                    <label>password</label>
+                    <input type="password" name="password" placeholder="minimum 8 characters" required>
+                    <span class="hint">минимум 8 символов</span>
+                </div>
+
+                <div class="form-group">
+                    <label>confirm password</label>
+                    <input type="password" name="password_confirm" placeholder="repeat password" required>
+                    <span class="hint">пароли должны совпадать</span>
+                </div>
+            </div>
+
+            <div id="optional" class="section" style="margin-top: 40px;">
+                <h3 style="color: #7b3b36; margin-bottom: 15px;">4. optional info</h3>
+                
+                <div class="form-group">
+                    <label>favorite album</label>
+                    <input type="text" name="favorite_album" placeholder="heaven or las vegas" value="{{ form.favorite_album.value|default:'' }}">
+                    <span class="hint">можно не заполнять</span>
+                </div>
+            </div>
+
+            <div style="text-align: center; margin: 20px 0;">
+                <a href="#" style="color: #b07873;"> back to top</a>
+            </div>
+
+            <button type="submit" class="submit-btn">submit</button>
+        </form>
+
+        <div class="back-link">
+            <a href="{% url 'login' %}" style="color: #b07873;"> back to validation methods</a>
+        </div>
+    </div>
+</body>
+</html>

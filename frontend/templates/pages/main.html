@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <style>
+        .quote-text {
+            max-width: 550px;
+            margin: 0 auto;
+        }
+        .author { text-align: right; }
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> maria d. presents </title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <div class="my-fixed-menu">
+        <div class="my-menu-header">
+            <p style="text-align: center; margin-top: 15px;">
+                <span class="i-present">maria d. presents</span>
+            </p>
+        </div>
+        
+        <div class="menu-links">
+            <a href="{% url 'page1' %}">page 1</a>
+            <a href="{% url 'page2' %}">page 2</a>
+            <a href="{% url 'page3' %}">page 3</a>
+            <a href="{% url 'login' %}">login</a>
+        </div>
+    </div>
+
+    <div style="padding-top: 160px;">
+        <div class="centered-text">
+            <h1> get to know me through music 2026 edition </h1>
+            <br>
+            <br>
+            <div class="quote-text">
+                <p>
+                    "A truly great album can change the way you see everything. An artist can take you on a journey as you discover the world together. The best albums stay with you, you can always return to them, just like old friends."
+                </p>
+                <p class="author">
+                    <em>Harry Styles, 2026</em>
+                </p>
+            </div>
+        </div>
+        <br>
+        <h4>maria d. is typing...</h4>
+        <br>
+        <p> 
+            Music is an essentional part of my life. I can't imagine living without it. So I decided to use this project as an opportunity to express my love for the albums I built my personality on.
+        </p>
+        <p>
+            On the following pages, I will briefly introduce you to the <strong>top3</strong> albums my identity is based on at the moment:
+        </p>
+    </div>
+    <div class="main-page-albums-box">
+    <ul>
+        <li><a href="{% url 'page1' %}">✦ Cocteau Twins - Heaven or Las Vegas</a></li>
+        <li><a href="{% url 'page2' %}">✧ TV Girl - The Night in Question: French Exit Outtakes</a></li>
+        <li><a href="{% url 'page3' %}">✦ Red Velvet - Chill Kill</a></li>
+    </ul>
+</div>
+    <div style="text-align: center; color: #b07873; font-size: 15px; margin: 50px 0;">
+        <p>. . . . . . . ✦</p>
+        <p>. . . . . ✦</p>
+        <p>. . . ✦</p>
+        <p>. ✦</p>
+        <p>✦</p>
+        <p>. ✦</p>
+        <p>. . . ✦</p>
+        <p>. . . . . ✦</p>
+        <p>. . . . . . . ✦</p>
+        <p>. . . . . ✦</p>
+        <p>. . . ✦</p>
+        <p>. ✦</p>
+        <p>✦</p>
+        <p>. ✦</p>
+        <p>. . . ✦</p>
+        <p>. . . . . ✦</p>
+        <p>. . . . . . . ✦</p>
+        <p>. . . . . ✦</p>
+        <p>. . . ✦</p>
+        <p>. ✦</p>
+        <p>✦</p>
+        <p>. ✦</p>
+        <p>. . . ✦</p>
+        <p>. . . . . ✦</p>
+        <p>. . . . . . . ✦</p>
+        <p>. . . . . ✦</p>
+        <p>. . . ✦</p>
+        <p>. ✦</p>
+        <p>✦</p>
+        <p>. ✦</p>
+        <p>. . . ✦</p>
+        <p>. . . . . ✦</p>
+        <p>. . . . . . . ✦</p>
+        <p>. . . . . ✦</p>
+        <p>. . . ✦</p>
+        <p>. ✦</p>
+        <p>✦</p>
+        <p> cosmic love <3 </p>
+    </div>
+
+    <div class="video-container">
+    <video autoplay loop muted playsinline class="looping-video">
+        <source src="{% static "media/a cat.mp4" %}" type="video/mp4">
+        Не удается воспроизвести классного кота в микроволновке :(
+    </video>
+</div>
+</body>
+</html>

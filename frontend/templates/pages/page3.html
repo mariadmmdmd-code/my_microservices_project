@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> page 3 </title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body data-page-name="page3">>
+    <div class="my-fixed-menu">
+        <div class="my-menu-header">
+            <p style="text-align: center; margin-top: 15px;"><span class="i-present"><a href="{% url 'main' %}">back to main page</a></span></p>
+        </div>
+        
+        <div class="menu-links">
+            <a href="{% url 'page1' %}">page 1</a>
+            <a href="{% url 'page2' %}">page 2</a>
+            <a href="{% url 'page3' %}">page 3</a>
+            <a href="{% url 'login' %}">login</a>
+        </div>
+    </div>
+
+    <div class="album-page-container">
+        
+        <div class="album-main-block">
+            <img src="https://upload.wikimedia.org/wikipedia/en/7/71/Red_Velvet_-_Chill_Kill.png" 
+                alt="Chill Kill album cover" 
+                class="album-cover">
+            
+            <div class="album-info">
+                <h1 class="album-title">Chill Kill</h1>
+                <h2 class="album-artist">Red Velvet</h2>
+                <div class="album-description">
+                    <p>Chill Kill is the third Korean studio album and fourth overall by South Korean girl group Red Velvet released by SM Entertainment on November 13, 2023.</p>
+                    <p>This album and its concept focus more on their ‘Velvet’ concept, complete with intricate lore posted across their various social media accounts.</p>
+
+                    <p><a href="#listen" style="color: #7b3b36; text-decoration: none;">↓ Listen on Spotify</a></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="tracklist-section">
+            <h3 class="tracklist-title">Tracklist:</h3>
+            <ol class="tracklist">
+                <li>Chill Kill</li>
+                <li>Knock Knock (Who’s There?)</li>
+                <li>Underwater</li>
+                <li>Will I Ever See You Again?</li>
+                <li>Nightmare </li>
+                <li>Iced Coffee</li>
+                <li>One Kiss</li>
+                <li>Bulldozer</li>
+                <li>Wings</li>
+                <li>Scenery</li>
+            </ol>
+        </div>
+        
+        <div class="spotify-link" id="listen">
+            <a href="https://open.spotify.com/album/4Z7UDSYMHWwsQ7pmtt0SlJ?si=W-styuamSHWyCmAWhhM8ig" target="_blank">
+                Listen on Spotify <3
+            </a>
+        </div>
+    </div>
+
+    <div class="ratings-container">
+        <h3 style="color: #7b3b36;">Rate this page</h3>
+        
+        <div class="rating-buttons">
+            <button id="like-btn" class="rating-btn">👍 Like</button>
+            <button id="dislike-btn" class="rating-btn">👎 Dislike</button>
+            <button id="reset-btn" class="rating-btn" style="border-color: red; color: red;">Reset</button>
+        </div>
+        
+        <div class="rating-stats">
+            <span>👍 <span id="likes-count">0</span></span>
+            <span>👎 <span id="dislikes-count">0</span></span>
+        </div>
+    </div>
+
+    {% csrf_token %}
+    
+    <script src="{% static 'js/ratings.js' %}"></script>
+</body>
+</html>

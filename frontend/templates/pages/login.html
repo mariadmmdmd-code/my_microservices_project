@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> login page </title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+<body class="login">
+    <div class="my-fixed-menu">
+        <div class="my-menu-header">
+            <p style="text-align: center; margin-top: 15px;"><span class="i-present"><a href="{% url 'main' %}">back to main page</a></span></p>
+        </div>
+        
+        <div class="menu-links">
+            <a href="{% url 'page1' %}">page 1</a>
+            <a href="{% url 'page2' %}">page 2</a>
+            <a href="{% url 'page3' %}">page 3</a>
+            <a href="{% url 'login' %}">login</a>
+        </div>
+    </div>
+
+    <div style="padding-top: 160px;">
+
+        <div style="display: flex; gap: 30px;">
+            
+            <div style="flex: 1; background-color: #faf1f0; border-radius: 12px; padding: 30px; text-align: center;">
+                <h2 style="color: #7b3b36; margin-bottom: 15px;">css validation</h2>
+                <a href="{% url 'login_css' %}" 
+                style="display: inline-block; background-color: #7b3b36; color: white; 
+                        padding: 12px 30px; border-radius: 50px; text-decoration: none;
+                        font-weight: bold; transition: 0.3s;">
+                    > try <
+                </a>
+            </div>
+            
+            <div style="flex: 1; background-color: #faf1f0; border-radius: 12px; padding: 30px; text-align: center;">
+                <h2 style="color: #7b3b36; margin-bottom: 15px;"> js validation</h2>
+                <a href="{% url 'login_js' %}" 
+                style="display: inline-block; background-color: #7b3b36; color: white; 
+                        padding: 12px 30px; border-radius: 50px; text-decoration: none;
+                        font-weight: bold; transition: 0.3s;">
+                    > try <
+                </a>
+            </div>
+
+        </div>
+
+        <div class="feedback-section">
+            <h3 class="feedback-title">dm me <3</h3>
+            
+            <form id="feedbackForm" class="feedback-form">
+                {% csrf_token %}
+                <textarea id="fbMessage" class="feedback-textarea" placeholder="your message..." rows="4" required></textarea>
+                <button type="submit" class="send-btn">send message through telegram</button>
+            </form>
+            
+            <div id="fbStatus" class="feedback-status"></div>
+        </div>
+        
+    </div>
+
+    <script>
+        document.getElementById('feedbackForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const message = document.getElementById('fbMessage').value;
+            const statusDiv = document.getElementById('fbStatus');
+            
+            if (!message.trim()) {
+                statusDiv.className = 'feedback-status error';
+                statusDiv.innerHTML = 'write something';
+                return;
+            }
+            
+            statusDiv.className = 'feedback-status';
+            statusDiv.innerHTML = 'sending...';
+            
+            try {
+                const response = await fetch('/send-feedback/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+                    },
+                    body: JSON.stringify({
+                        message: message
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.status === 'ok') {
+                    statusDiv.className = 'feedback-status success';
+                    statusDiv.innerHTML = 'message successfully sent!';
+                    document.getElementById('fbMessage').value = '';
+                } else {
+                    statusDiv.className = 'feedback-status error';
+                    statusDiv.innerHTML = 'error: ' + data.error;
+                }
+            } catch (error) {
+                statusDiv.className = 'feedback-status error';
+                statusDiv.innerHTML = 'network error';
+            }
+        });
+    </script>
+
+    </div>
+</body>
+</html>
