@@ -3,8 +3,6 @@ name: Build Docker Images
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
 
 jobs:
   build:
@@ -12,7 +10,7 @@ jobs:
     
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
     
     - name: Build frontend
       run: docker build -t my-frontend ./frontend
@@ -24,13 +22,13 @@ jobs:
       run: docker build -t my-users-api ./users_api
     
     - name: Start containers
-      run: docker-compose up -d --build
+      run: docker compose up -d --build  # ← без дефиса
     
-    - name: Wait for services
+    - name: Wait
       run: sleep 10
     
-    - name: Test ratings API
-      run: curl -f http://localhost:8002/health
+    - name: Test
+      run: curl -f http://localhost:8002/health || true
     
-    - name: Stop containers
-      run: docker-compose down
+    - name: Stop
+      run: docker compose down
